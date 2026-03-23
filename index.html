@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FarmTrack - Farming Input Cost & Yield Record System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-black text-white min-h-screen">
+  
+  <!-- Navigation -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-black/80 border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <a href="#" onclick="showPage('landing')" class="flex items-center gap-2">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center">
+            <iconify-icon icon="mdi:sprout" class="text-white text-xl"></iconify-icon>
+          </div>
+          <span class="text-xl font-semibold tracking-tight">FarmTrack</span>
+        </a>
+        
+        <!-- Navigation Links -->
+        <div id="nav-links" class="hidden md:flex items-center gap-8">
+          <a href="#features" class="nav-link text-sm text-slate-300 hover:text-white transition-colors">Features</a>
+          <a href="#how-it-works" class="nav-link text-sm text-slate-300 hover:text-white transition-colors">How It Works</a>
+          <a href="#modules" class="nav-link text-sm text-slate-300 hover:text-white transition-colors">Modules</a>
+        </div>
+        
+        <!-- Auth Buttons -->
+        <div id="auth-buttons" class="flex items-center gap-4">
+          <button onclick="showPage('login')" class="text-sm text-slate-300 hover:text-white transition-colors">Login</button>
+          <button onclick="showPage('register')" class="btn-primary px-5 py-2 rounded-lg text-sm font-medium text-white">Get Started</button>
+        </div>
+        
+        <!-- User Menu (hidden by default) -->
+        <div id="user-menu" class="hidden items-center gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
+              <iconify-icon icon="mdi:account" class="text-emerald-400"></iconify-icon>
+            </div>
+            <span id="user-name" class="text-sm font-medium"></span>
+          </div>
+          <button onclick="logout()" class="text-sm text-rose-400 hover:text-rose-300 transition-colors flex items-center gap-1">
+            <iconify-icon icon="mdi:logout"></iconify-icon>
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== LANDING PAGE ========== -->
+  <div id="page-landing" class="page active">
+    
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+      <!-- Background Image -->
+      <div class="absolute inset-0">
+        <img src="https://picsum.photos/seed/farming-hero/1920/1080" alt="Farm" class="w-full h-full object-cover opacity-30">
+        <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40"></div>
+      </div>
+      
+      <!-- Glow Effect -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-emerald-500/10 blur-[120px] rounded-full"></div>
+      
+      <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-20">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <!-- Left Content -->
+          <div class="space-y-8">
+            <div class="animate-in delay-1">
+              <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-medium">
+                <iconify-icon icon="mdi:leaf"></iconify-icon>
+                Smart Farm Management
+              </span>
+            </div>
+            
+            <h1 class="animate-in delay-2 text-4xl md:text-6xl font-light tracking-tight leading-[1.1]">
+              Transform Your Farm
+              <span class="text-emerald-400">Management</span>
+              <br>With Data-Driven Insights
+            </h1>
+            
+            <p class="animate-in delay-3 text-lg text-slate-300 max-w-xl leading-relaxed">
+              Record inputs, track yields, and calculate profits automatically. 
+              Make informed decisions for sustainable small-scale farming with our 
+              intelligent agricultural information system.
+            </p>
+            
+            <div class="animate-in delay-4 flex flex-wrap gap-4">
+              <button onclick="showPage('register')" class="btn-primary px-8 py-4 rounded-xl text-base font-medium flex items-center gap-2">
+                Start Free Today
+                <iconify-icon icon="mdi:arrow-right"></iconify-icon>
+              </button>
+              <button onclick="showPage('login')" class="px-8 py-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-base font-medium">
+                Login to Dashboard
+              </button>
+            </div>
+            
+            <div class="animate-in delay-5 flex items-center gap-8 pt-4">
+              <div class="text-center">
+                <p class="text-2xl font-semibold text-emerald-400">500+</p>
+                <p class="text-sm text-slate-400">Active Farmers</p>
+              </div>
+              <div class="w-px h-12 bg-white/10"></div>
+              <div class="text-center">
+                <p class="text-2xl font-semibold text-emerald-400">KES 2M+</p>
+                <p class="text-sm text-slate-400">Tracked Profits</p>
+              </div>
+              <div class="w-px h-12 bg-white/10"></div>
+              <div class="text-center">
+                <p class="text-2xl font-semibold text-emerald-400">98%</p>
+                <p class="text-sm text-slate-400">Accuracy Rate</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Right Content - Feature Cards -->
+          <div class="animate-in delay-6 hidden lg:grid grid-cols-2 gap-4">
+            <div class="space-y-4">
+              <div class="card-hover p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4">
+                  <iconify-icon icon="mdi:database" class="text-2xl text-emerald-400"></iconify-icon>
+                </div>
+                <h3 class="font-semibold mb-2">Input Tracking</h3>
+                <p class="text-sm text-slate-400">Record seeds, fertilizers, labor & irrigation costs</p>
+              </div>
+              <div class="card-hover p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4">
+                  <iconify-icon icon="mdi:chart-line" class="text-2xl text-emerald-400"></iconify-icon>
+                </div>
+                <h3 class="font-semibold mb-2">Yield Analysis</h3>
+                <p class="text-sm text-slate-400">Track harvest quantities and selling prices</p>
+              </div>
+            </div>
+            <div class="space-y-4 mt-8">
+              <div class="card-hover p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4">
+                  <iconify-icon icon="mdi:calculator" class="text-2xl text-emerald-400"></iconify-icon>
+                </div>
+                <h3 class="font-semibold mb-2">Auto Calculations</h3>
+                <p class="text-sm text-slate-400">Profit, costs & ratios computed instantly</p>
+              </div>
+              <div class="card-hover p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4">
+                  <iconify-icon icon="mdi:file-document" class="text-2xl text-emerald-400"></iconify-icon>
+                </div>
+                <h3 class="font-semibold mb-2">Smart Reports</h3>
+                <p class="text-sm text-slate-400">Generate financial & performance reports</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-[#0a0b0e]">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium uppercase tracking-wider mb-4">
+            Features
+          </span>
+          <h2 class="text-3xl md:text-4xl font-light tracking-tight mb-4">
+            Everything You Need to
+            <span class="text-emerald-400">Manage Your Farm</span>
+          </h2>
+          <p class="text-slate-400">
+            A complete farm management solution designed for small-scale farmers
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Feature 1 -->
+          <div class="card-hover p-8 rounded-2xl bg-[#0c0d10] border border-white/5 text-center">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 flex items-center justify-center mx-auto mb-6">
+              <iconify-icon icon="mdi:account-group" class="text-3xl text-emerald-400"></iconify-icon>
+            </div>
+            <h3 class="font-semibold text-lg mb-3">User Roles</h3>
+            <p class="text-sm text-slate-400">Separate dashboards for Farmers and Agricultural Officers</p>
+          </div>
+          
+          <!-- Feature 2 -->
+          <div class="card-hover p-8 rounded-2xl bg-[#0c0d10] border border-white/5 text-center">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 flex items-center justify-center mx-auto mb-6">
+              <iconify-icon icon="mdi:shield-check" class="text-3xl text-emerald-400"></iconify-icon>
+            </div>
+            <h3 class="font-semibold text-lg mb-3">Secure Data</h3>
+            <p class="text-sm text-slate-400">Encrypted passwords and role-based access control</p>
+          </div>
+          
+          <!-- Feature 3 -->
+          <div class="card-hover p-8 rounded-2xl bg-[#0c0d10] border border-white/5 text-center">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 flex items-center justify-center mx-auto mb-6">
+              <iconify-icon icon="mdi:sync" class="text-3xl text-emerald-400"></iconify-icon>
+            </div>
+            <h3 class="font-semibold text-lg mb-3">Real-time</h3>
+            <p class="text-sm text-slate-400">Instant calculations and live dashboard updates</p>
+          </div>
+          
+          <!-- Feature 4 -->
+          <div class="card-hover p-8 rounded-2xl bg-[#0c0d10] border border-white/5 text-center">
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 flex items-center justify-center mx-auto mb-6">
+              <iconify-icon icon="mdi:cellphone" class="text-3xl text-emerald-400"></iconify-icon>
+            </div>
+            <h3 class="font-semibold text-lg mb-3">Mobile Ready</h3>
+            <p class="text-sm text-slate-400">Works on smartphones, tablets, and computers</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-24 bg-black">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium uppercase tracking-wider mb-4">
+            Process
+          </span>
+          <h2 class="text-3xl md:text-4xl font-light tracking-tight mb-4">
+            How The System
+            <span class="text-emerald-400">Works</span>
+          </h2>
+        </div>
+        
+        <div class="relative">
+          <!-- Connection Line -->
+          <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent"></div>
+          
+          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Step 1 -->
+            <div class="relative">
+              <div class="card-hover p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+                <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white font-semibold mb-4">1</div>
+                <h3 class="font-semibold mb-2">Register & Login</h3>
+                <p class="text-sm text-slate-400">Create your account as a Farmer or Agricultural Officer with secure authentication</p>
+              </div>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="relative">
+              <div class="card-hover p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+                <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white font-semibold mb-4">2</div>
+                <h3 class="font-semibold mb-2">Record Inputs</h3>
+                <p class="text-sm text-slate-400">Log your seeds, fertilizers, labor, and irrigation costs throughout the season</p>
+              </div>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="relative">
+              <div class="card-hover p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+                <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white font-semibold mb-4">3</div>
+                <h3 class="font-semibold mb-2">Track Yields</h3>
+                <p class="text-sm text-slate-400">Record harvest quantities and selling prices per crop and season</p>
+              </div>
+            </div>
+            
+            <!-- Step 4 -->
+            <div class="relative">
+              <div class="card-hover p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+                <div class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center text-white font-semibold mb-4">4</div>
+                <h3 class="font-semibold mb-2">View Reports</h3>
+                <p class="text-sm text-slate-400">Get automatic profit calculations and comprehensive financial reports</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Modules Section -->
+    <section id="modules" class="py-24 bg-[#0a0b0e]">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium uppercase tracking-wider mb-4">
+            System Modules
+          </span>
+          <h2 class="text-3xl md:text-4xl font-light tracking-tight mb-4">
+            Comprehensive Farm
+            <span class="text-emerald-400">Management Modules</span>
+          </h2>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Input Recording Module -->
+          <div class="card-hover p-8 rounded-2xl bg-[#0c0d10] border border-white/5">
+            <div class="flex items-start gap-4 mb-6">
+              <div class="w-14 h-14 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0">
+                <iconify-icon icon="mdi:database-plus" class="text-2xl text-emerald-400"></iconify-icon>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-2">Input Recording Module</h3>
+                <p class="text-slate-400 text-sm">Record and track all farm inputs with automatic cost calculations</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Seeds, Fertilizers, Pesticides tracking</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Labor & Irrigation cost recording</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Automatic total cost calculation</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Season-based organization</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Yield Recording Module -->
+          <div class="card-hover p-8 rounded-2xl bg-[#0c0d10] border border-white/5">
+            <div class="flex items-start gap-4 mb-6">
+              <div class="w-14 h-14 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0">
+                <iconify-icon icon="mdi:barley" class="text-2xl text-emerald-400"></iconify-icon>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-2">Yield Recording Module</h3>
+                <p class="text-slate-400 text-sm">Track harvest data and calculate gross income automatically</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Crop type & variety tracking</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Quantity harvested recording</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Selling price per unit</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Gross income calculation</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Financial Calculation Module -->
+          <div class="card-hover p-8 rounded-2xl bg-[#0c0d10] border border-white/5">
+            <div class="flex items-start gap-4 mb-6">
+              <div class="w-14 h-14 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0">
+                <iconify-icon icon="mdi:calculator-variant" class="text-2xl text-emerald-400"></iconify-icon>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-2">Financial Calculation Engine</h3>
+                <p class="text-slate-400 text-sm">Intelligent system for automatic profit and ratio analysis</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Total Input Cost = Σ(Qty × Unit Cost)</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Gross Income = Yield × Price</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Net Profit = Income − Costs</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Cost-to-Yield Ratio Analysis</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Report Generation Module -->
+          <div class="card-hover p-8 rounded-2xl bg-[#0c0d10] border border-white/5">
+            <div class="flex items-start gap-4 mb-6">
+              <div class="w-14 h-14 rounded-xl bg-emerald-500/10 flex items-center justify-center shrink-0">
+                <iconify-icon icon="mdi:file-chart" class="text-2xl text-emerald-400"></iconify-icon>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold mb-2">Report Generation Module</h3>
+                <p class="text-slate-400 text-sm">Generate comprehensive reports for decision making</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Financial Report Per Season</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Performance Analysis</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Seasonal Comparisons</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm">
+                <iconify-icon icon="mdi:check-circle" class="text-emerald-400"></iconify-icon>
+                <span class="text-slate-300">Export Capabilities</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-24 bg-black relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent"></div>
+      <div class="relative max-w-4xl mx-auto px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-light tracking-tight mb-6">
+          Ready to Transform Your
+          <span class="text-emerald-400">Farm Management?</span>
+        </h2>
+        <p class="text-slate-300 text-lg mb-8 max-w-2xl mx-auto">
+          Join hundreds of farmers who are already making data-driven decisions 
+          for better productivity and profitability.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <button onclick="showPage('register')" class="btn-primary px-8 py-4 rounded-xl text-base font-medium flex items-center gap-2">
+            Create Your Account
+            <iconify-icon icon="mdi:arrow-right"></iconify-icon>
+          </button>
+          <button onclick="showPage('login')" class="px-8 py-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-base font-medium">
+            Login as Officer
+          </button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-12 bg-[#0a0b0e] border-t border-white/5">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center">
+              <iconify-icon icon="mdi:sprout" class="text-white text-sm"></iconify-icon>
+            </div>
+            <span class="font-semibold">FarmTrack</span>
+          </div>
+          <p class="text-sm text-slate-500">
+            © 2025 FarmTrack. Empowering Small-Scale Farmers with Data-Driven Insights.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ========== LOGIN PAGE ========== -->
+  <div id="page-login" class="page">
+    <section class="min-h-screen flex items-center justify-center pt-16 px-6">
+      <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center mx-auto mb-6">
+            <iconify-icon icon="mdi:sprout" class="text-white text-3xl"></iconify-icon>
+          </div>
+          <h1 class="text-2xl font-semibold mb-2">Welcome Back</h1>
+          <p class="text-slate-400">Login to your FarmTrack account</p>
+        </div>
+        
+        <div class="card-hover p-8 rounded-2xl bg-[#0c0d10] border border-white/5">
+          <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
+            <div>
+              <label class="block text-sm font-medium mb-2">Email Address</label>
+              <input type="email" id="login-email" required class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="Enter your email">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium mb-2">Password</label>
+              <input type="password" id="login-password" required class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="Enter your password">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium mb-2">Login As</label>
+              <select id="login-role" class="input-field w-full px-4 py-3 rounded-xl text-white bg-[#0c0d10]">
+                <option value="farmer">Farmer</option>
+                <option value="officer">Agricultural Officer</option>
+              </select>
+            </div>
+            
+            <button type="submit" class="btn-primary w-full py-3 rounded-xl font-medium">
+              Login to Dashboard
+            </button>
+          </form>
+          
+          <div class="mt-6 text-center">
+            <p class="text-sm text-slate-400">
+              Don't have an account?
+              <button onclick="showPage('register')" class="text-emerald-400 hover:text-emerald-300 ml-1">Register</button>
+            </p>
+          </div>
+        </div>
+        
+        <div class="mt-6">
+          <button onclick="showPage('landing')" class="w-full text-center text-sm text-slate-400 hover:text-white transition-colors">
+            ← Back to Home
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== REGISTER PAGE ========== -->
+  <div id="page-register" class="page">
+    <section class="min-h-screen flex items-center justify-center pt-16 px-6 py-12">
+      <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 flex items-center justify-center mx-auto mb-6">
+            <iconify-icon icon="mdi:sprout" class="text-white text-3xl"></iconify-icon>
+          </div>
+          <h1 class="text-2xl font-semibold mb-2">Create Account</h1>
+          <p class="text-slate-400">Join FarmTrack and start managing your farm</p>
+        </div>
+        
+        <div class="card-hover p-8 rounded-2xl bg-[#0c0d10] border border-white/5">
+          <form id="register-form" onsubmit="handleRegister(event)" class="space-y-5">
+            <div>
+              <label class="block text-sm font-medium mb-2">Full Name</label>
+              <input type="text" id="register-name" required class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="Enter your full name">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium mb-2">Email Address</label>
+              <input type="email" id="register-email" required class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="Enter your email">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium mb-2">Phone Number</label>
+              <input type="tel" id="register-phone" required class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="e.g., +254 7XX XXX XXX">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium mb-2">Password</label>
+              <input type="password" id="register-password" required minlength="6" class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="Create a password (min 6 characters)">
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium mb-2">Confirm Password</label>
+              <input type="password" id="register-confirm" required class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="Confirm your password">
+            </div>
+            
+            <button type="submit" class="btn-primary w-full py-3 rounded-xl font-medium">
+              Create Account
+            </button>
+          </form>
+          
+          <div class="mt-6 text-center">
+            <p class="text-sm text-slate-400">
+              Already have an account?
+              <button onclick="showPage('login')" class="text-emerald-400 hover:text-emerald-300 ml-1">Login</button>
+            </p>
+          </div>
+        </div>
+        
+        <div class="mt-6">
+          <button onclick="showPage('landing')" class="w-full text-center text-sm text-slate-400 hover:text-white transition-colors">
+            ← Back to Home
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ========== FARMER DASHBOARD ========== -->
+  <div id="page-farmer-dashboard" class="page">
+    <div class="pt-20 pb-12 px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        
+        <!-- Dashboard Header -->
+        <div class="mb-8">
+          <h1 class="text-2xl md:text-3xl font-light tracking-tight mb-2">
+            Welcome, <span id="dashboard-name" class="text-emerald-400"></span>
+          </h1>
+          <p class="text-slate-400">Manage your farm inputs, yields, and view financial reports</p>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div class="stat-card p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                <iconify-icon icon="mdi:cash-multiple" class="text-emerald-400"></iconify-icon>
+              </div>
+              <span class="text-xs text-slate-400 uppercase tracking-wider">Total Costs</span>
+            </div>
+            <p id="stat-total-cost" class="text-2xl font-semibold">KES 0</p>
+          </div>
+          
+          <div class="stat-card p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                <iconify-icon icon="mdi:trending-up" class="text-emerald-400"></iconify-icon>
+              </div>
+              <span class="text-xs text-slate-400 uppercase tracking-wider">Gross Income</span>
+            </div>
+            <p id="stat-gross-income" class="text-2xl font-semibold">KES 0</p>
+          </div>
+          
+          <div class="stat-card p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                <iconify-icon icon="mdi:profit" class="text-emerald-400"></iconify-icon>
+              </div>
+              <span class="text-xs text-slate-400 uppercase tracking-wider">Net Profit</span>
+            </div>
+            <p id="stat-net-profit" class="text-2xl font-semibold">KES 0</p>
+          </div>
+          
+          <div class="stat-card p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                <iconify-icon icon="mdi:chart-box" class="text-emerald-400"></iconify-icon>
+              </div>
+              <span class="text-xs text-slate-400 uppercase tracking-wider">Cost/Yield Ratio</span>
+            </div>
+            <p id="stat-ratio" class="text-2xl font-semibold">0.00</p>
+          </div>
+        </div>
+        
+        <!-- Smart Insights Panel -->
+        <div class="mb-8 p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+          <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+            <iconify-icon icon="mdi:lightbulb-on" class="text-emerald-400"></iconify-icon>
+            Smart Insights
+          </h3>
+          <div id="insight-content" class="space-y-3">
+            <!-- Dynamic insights will be populated here -->
+          </div>
+        </div>
+        
+        <!-- Visual Analytics Charts -->
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold mb-6 flex items-center gap-2">
+            <iconify-icon icon="mdi:chart-pie" class="text-emerald-400"></iconify-icon>
+            Visual Analytics
+            <button onclick="exportFarmCSV()" class="ml-auto text-xs px-2 py-1 bg-emerald-500 rounded text-white hover:bg-emerald-600 transition-colors flex items-center gap-1">
+              <iconify-icon icon="mdi:download" class="text-[0.8rem]"></iconify-icon>
+              CSV
+            </button>
+          </h3>
+          <div class="grid lg:grid-cols-2 gap-3">
+            <!-- Trend Chart -->
+            <div class="p-1 rounded-md bg-[#0c0d10] border border-white/5">
+              <canvas id="trendChart" height="80" class="w-full"></canvas>
+            </div>
+            <!-- Expense Distribution -->
+            <div class="p-1 rounded-md bg-[#0c0d10] border border-white/5">
+              <canvas id="expenseDistChart" height="80" class="w-full"></canvas>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Dashboard Tabs -->
+        <div class="mb-8">
+          <div class="flex flex-wrap gap-2 p-1 bg-[#0a0b0e] rounded-xl border border-white/5">
+            <button onclick="switchTab('inputs')" id="tab-inputs" class="tab-btn px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-emerald-500 text-white">
+              Farm Inputs
+            </button>
+            <button onclick="switchTab('yields')" id="tab-yields" class="tab-btn px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-slate-400 hover:text-white">
+              Crop Yields
+            </button>
+            <button onclick="switchTab('reports')" id="tab-reports" class="tab-btn px-5 py-2.5 rounded-lg text-sm font-medium transition-all text-slate-400 hover:text-white">
+              Reports
+            </button>
+          </div>
+        </div>
+        
+        <!-- Tab Contents -->
+        
+        <!-- Inputs Tab -->
+        <div id="content-inputs" class="tab-content">
+          <div class="grid lg:grid-cols-3 gap-6">
+            <!-- Add Input Form -->
+            <div class="lg:col-span-1">
+              <div class="card-hover p-6 rounded-2xl bg-[#0c0d10] border border-white/5 sticky top-24">
+                <h3 class="text-lg font-semibold mb-6 flex items-center gap-2">
+                  <iconify-icon icon="mdi:plus-circle" class="text-emerald-400"></iconify-icon>
+                  Add Farm Input
+                </h3>
+                <form id="input-form" onsubmit="addInput(event)" class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-medium mb-2">Input Type</label>
+                    <select id="input-type" required class="input-field w-full px-4 py-3 rounded-xl text-white bg-[#0c0d10]">
+                      <option value="">Select type...</option>
+                      <option value="Seeds">Seeds</option>
+                      <option value="Fertilizer">Fertilizer</option>
+                      <option value="Pesticide">Pesticide</option>
+                      <option value="Labor">Labor</option>
+                      <option value="Irrigation">Irrigation</option>
+                      <option value="Equipment">Equipment</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium mb-2">Description</label>
+                    <input type="text" id="input-desc" class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="e.g., Maize seeds, DAP fertilizer">
+                  </div>
+                  
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium mb-2">Quantity</label>
+                      <input type="number" id="input-qty" required min="0" step="0.01" class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="0">
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium mb-2">Unit</label>
+                      <select id="input-unit" class="input-field w-full px-4 py-3 rounded-xl text-white bg-[#0c0d10]">
+                        <option value="kg">Kilograms</option>
+                        <option value="bags">Bags</option>
+                        <option value="liters">Liters</option>
+                        <option value="units">Units</option>
+                        <option value="days">Days</option>
+                        <option value="hours">Hours</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium mb-2">Cost per Unit (KES)</label>
+                    <input type="number" id="input-cost" required min="0" step="0.01" class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="0.00">
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium mb-2">Season</label>
+                    <select id="input-season" required class="input-field w-full px-4 py-3 rounded-xl text-white bg-[#0c0d10]">
+                      <option value="2025 Season A">2025 Season A</option>
+                      <option value="2025 Season B">2025 Season B</option>
+                      <option value="2024 Season B">2024 Season B</option>
+                    </select>
+                  </div>
+                  
+                  <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                    <p class="text-sm text-slate-400 mb-1">Total Cost</p>
+                    <p id="input-total-preview" class="text-xl font-semibold text-emerald-400">KES 0.00</p>
+                  </div>
+                  
+                  <button type="submit" class="btn-primary w-full py-3 rounded-xl font-medium">
+                    Add Input Record
+                  </button>
+                </form>
+              </div>
+            </div>
+            
+            <!-- Inputs List -->
+            <div class="lg:col-span-2">
+              <div class="card-hover rounded-2xl bg-[#0c0d10] border border-white/5 overflow-hidden">
+                <div class="p-6 border-b border-white/5">
+                  <h3 class="text-lg font-semibold flex items-center gap-2">
+                    <iconify-icon icon="mdi:format-list-bulleted" class="text-emerald-400"></iconify-icon>
+                    Input Records
+                    <span id="inputs-count" class="ml-auto text-sm text-slate-400 font-normal">0 records</span>
+                  </h3>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="w-full">
+                    <thead>
+                      <tr class="border-b border-white/5">
+                        <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Type</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Description</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Qty</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Unit Cost</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Total</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="inputs-table-body">
+                      <!-- Dynamic content -->
+                    </tbody>
+                  </table>
+                </div>
+                <div id="inputs-empty" class="p-12 text-center">
+                  <iconify-icon icon="mdi:database-off" class="text-4xl text-slate-600 mb-3"></iconify-icon>
+                  <p class="text-slate-400">No input records yet. Add your first input above.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Yields Tab -->
+        <div id="content-yields" class="tab-content hidden">
+          <div class="grid lg:grid-cols-3 gap-6">
+            <!-- Add Yield Form -->
+            <div class="lg:col-span-1">
+              <div class="card-hover p-6 rounded-2xl bg-[#0c0d10] border border-white/5 sticky top-24">
+                <h3 class="text-lg font-semibold mb-6 flex items-center gap-2">
+                  <iconify-icon icon="mdi:plus-circle" class="text-emerald-400"></iconify-icon>
+                  Add Crop Yield
+                </h3>
+                <form id="yield-form" onsubmit="addYield(event)" class="space-y-4">
+                  <div>
+                    <label class="block text-sm font-medium mb-2">Crop Type</label>
+                    <select id="yield-crop" required class="input-field w-full px-4 py-3 rounded-xl text-white bg-[#0c0d10]">
+                      <option value="">Select crop...</option>
+                      <option value="Maize">Maize</option>
+                      <option value="Beans">Beans</option>
+                      <option value="Rice">Rice</option>
+                      <option value="Wheat">Wheat</option>
+                      <option value="Potatoes">Potatoes</option>
+                      <option value="Tomatoes">Tomatoes</option>
+                      <option value="Cabbage">Cabbage</option>
+                      <option value="Sugarcane">Sugarcane</option>
+                      <option value="Coffee">Coffee</option>
+                      <option value="Tea">Tea</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium mb-2">Variety/Description</label>
+                    <input type="text" id="yield-variety" class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="e.g., Hybrid 614">
+                  </div>
+                  
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-sm font-medium mb-2">Quantity</label>
+                      <input type="number" id="yield-qty" required min="0" step="0.01" class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="0">
+                    </div>
+                    <div>
+                      <label class="block text-sm font-medium mb-2">Unit</label>
+                      <select id="yield-unit" class="input-field w-full px-4 py-3 rounded-xl text-white bg-[#0c0d10]">
+                        <option value="kg">Kilograms</option>
+                        <option value="bags">Bags</option>
+                        <option value="crates">Crates</option>
+                        <option value="tons">Tons</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium mb-2">Selling Price per Unit (KES)</label>
+                    <input type="number" id="yield-price" required min="0" step="0.01" class="input-field w-full px-4 py-3 rounded-xl text-white" placeholder="0.00">
+                  </div>
+                  
+                  <div>
+                    <label class="block text-sm font-medium mb-2">Season</label>
+                    <select id="yield-season" required class="input-field w-full px-4 py-3 rounded-xl text-white bg-[#0c0d10]">
+                      <option value="2025 Season A">2025 Season A</option>
+                      <option value="2025 Season B">2025 Season B</option>
+                      <option value="2024 Season B">2024 Season B</option>
+                    </select>
+                  </div>
+                  
+                  <div class="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                    <p class="text-sm text-slate-400 mb-1">Gross Income</p>
+                    <p id="yield-income-preview" class="text-xl font-semibold text-emerald-400">KES 0.00</p>
+                  </div>
+                  
+                  <button type="submit" class="btn-primary w-full py-3 rounded-xl font-medium">
+                    Add Yield Record
+                  </button>
+                </form>
+              </div>
+            </div>
+            
+            <!-- Yields List -->
+            <div class="lg:col-span-2">
+              <div class="card-hover rounded-2xl bg-[#0c0d10] border border-white/5 overflow-hidden">
+                <div class="p-6 border-b border-white/5">
+                  <h3 class="text-lg font-semibold flex items-center gap-2">
+                    <iconify-icon icon="mdi:barley" class="text-emerald-400"></iconify-icon>
+                    Yield Records
+                    <span id="yields-count" class="ml-auto text-sm text-slate-400 font-normal">0 records</span>
+                  </h3>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="w-full">
+                    <thead>
+                      <tr class="border-b border-white/5">
+                        <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Crop</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Variety</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Quantity</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Price/Unit</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Income</th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="yields-table-body">
+                      <!-- Dynamic content -->
+                    </tbody>
+                  </table>
+                </div>
+                <div id="yields-empty" class="p-12 text-center">
+                  <iconify-icon icon="mdi:barley-off" class="text-4xl text-slate-600 mb-3"></iconify-icon>
+                  <p class="text-slate-400">No yield records yet. Add your harvest above.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Reports Tab -->
+        <div id="content-reports" class="tab-content hidden">
+          <div class="grid lg:grid-cols-2 gap-6 mb-8">
+            <!-- Financial Summary Card -->
+            <div class="card-hover p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+              <h3 class="text-lg font-semibold mb-6 flex items-center gap-2">
+                <iconify-icon icon="mdi:finance" class="text-emerald-400"></iconify-icon>
+                Financial Summary
+              </h3>
+              <div class="space-y-4">
+                <div class="flex justify-between items-center p-4 rounded-xl bg-[#0a0b0e]">
+                  <span class="text-slate-400">Total Input Cost</span>
+                  <span id="report-total-cost" class="text-xl font-semibold">KES 0</span>
+                </div>
+                <div class="flex justify-between items-center p-4 rounded-xl bg-[#0a0b0e]">
+                  <span class="text-slate-400">Gross Income</span>
+                  <span id="report-gross-income" class="text-xl font-semibold">KES 0</span>
+                </div>
+                <div class="flex justify-between items-center p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                  <span class="text-emerald-400">Net Profit/Loss</span>
+                  <span id="report-net-profit" class="text-xl font-semibold text-emerald-400">KES 0</span>
+                </div>
+                <div class="flex justify-between items-center p-4 rounded-xl bg-[#0a0b0e]">
+                  <span class="text-slate-400">Cost-to-Yield Ratio</span>
+                  <span id="report-ratio" class="text-xl font-semibold">0.00</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Input Breakdown -->
+            <div class="card-hover p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+              <h3 class="text-lg font-semibold mb-6 flex items-center gap-2">
+                <iconify-icon icon="mdi:chart-pie" class="text-emerald-400"></iconify-icon>
+                Input Cost Breakdown
+              </h3>
+              <div id="input-breakdown" class="space-y-3">
+                <!-- Dynamic content -->
+              </div>
+              <div id="input-breakdown-empty" class="text-center py-8 text-slate-400">
+                No input data to analyze
+              </div>
+            </div>
+          </div>
+          
+          <!-- Seasonal Performance Chart -->
+          <div class="card-hover p-6 rounded-2xl bg-[#0c0d10] border border-white/5 mb-8">
+            <h3 class="text-lg font-semibold mb-6 flex items-center gap-2">
+              <iconify-icon icon="mdi:chart-bar" class="text-emerald-400"></iconify-icon>
+              Seasonal Performance
+            </h3>
+            <div id="seasonal-chart" class="h-64 flex items-end justify-center gap-8">
+              <!-- Dynamic content -->
+            </div>
+            <div id="seasonal-chart-empty" class="h-64 flex items-center justify-center text-slate-400">
+              Add records to see seasonal performance
+            </div>
+          </div>
+          
+          <!-- Top Performing Crops -->
+          <div class="card-hover p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+            <h3 class="text-lg font-semibold mb-6 flex items-center gap-2">
+              <iconify-icon icon="mdi:trophy" class="text-emerald-400"></iconify-icon>
+              Crop Performance
+            </h3>
+            <div id="crop-performance" class="overflow-x-auto">
+              <table class="w-full">
+                <thead>
+                  <tr class="border-b border-white/5">
+                    <th class="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Crop</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Total Yield</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Gross Income</th>
+                    <th class="px-4 py-3 text-left text-xs font-medium text-slate-400 uppercase">Performance</th>
+                  </tr>
+                </thead>
+                <tbody id="crop-performance-body">
+                  <!-- Dynamic content -->
+                </tbody>
+              </table>
+            </div>
+            <div id="crop-performance-empty" class="py-8 text-center text-slate-400">
+              No crop data available
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== OFFICER DASHBOARD ========== -->
+  <div id="page-officer-dashboard" class="page">
+    <div class="pt-20 pb-12 px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto">
+        
+        <!-- Dashboard Header -->
+        <div class="mb-8">
+          <h1 class="text-2xl md:text-3xl font-light tracking-tight mb-2">
+            Agricultural Officer Dashboard
+          </h1>
+          <p class="text-slate-400">Monitor farmer performance and provide advisory insights</p>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div class="stat-card p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                <iconify-icon icon="mdi:account-group" class="text-emerald-400"></iconify-icon>
+              </div>
+              <span class="text-xs text-slate-400 uppercase tracking-wider">Total Farmers</span>
+            </div>
+            <p id="officer-total-farmers" class="text-2xl font-semibold">0</p>
+          </div>
+          
+          <div class="stat-card p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                <iconify-icon icon="mdi:database" class="text-emerald-400"></iconify-icon>
+              </div>
+              <span class="text-xs text-slate-400 uppercase tracking-wider">Total Inputs</span>
+            </div>
+            <p id="officer-total-inputs" class="text-2xl font-semibold">0</p>
+          </div>
+          
+          <div class="stat-card p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                <iconify-icon icon="mdi:barley" class="text-emerald-400"></iconify-icon>
+              </div>
+              <span class="text-xs text-slate-400 uppercase tracking-wider">Total Yields</span>
+            </div>
+            <p id="officer-total-yields" class="text-2xl font-semibold">0</p>
+          </div>
+          
+          <div class="stat-card p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+                <iconify-icon icon="mdi:trending-up" class="text-emerald-400"></iconify-icon>
+              </div>
+              <span class="text-xs text-slate-400 uppercase tracking-wider">Avg Profit</span>
+            </div>
+            <p id="officer-avg-profit" class="text-2xl font-semibold">KES 0</p>
+          </div>
+        </div>
+        
+        <!-- Farmers List -->
+        <div class="card-hover rounded-2xl bg-[#0c0d10] border border-white/5 overflow-hidden">
+          <div class="p-6 border-b border-white/5">
+            <h3 class="text-lg font-semibold flex items-center gap-2">
+              <iconify-icon icon="mdi:account-search" class="text-emerald-400"></iconify-icon>
+              Registered Farmers
+            </h3>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="border-b border-white/5">
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Name</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Email</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Phone</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Inputs</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Yields</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Net Profit</th>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-slate-400 uppercase tracking-wider">Action</th>
+                </tr>
+              </thead>
+              <tbody id="farmers-table-body">
+                <!-- Dynamic content -->
+              </tbody>
+            </table>
+          </div>
+          <div id="farmers-empty" class="p-12 text-center">
+            <iconify-icon icon="mdi:account-off" class="text-4xl text-slate-600 mb-3"></iconify-icon>
+            <p class="text-slate-400">No farmers registered yet.</p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== FARMER DETAIL MODAL ========== -->
+  <div id="farmer-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeFarmerModal()"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+      <div class="card-hover m-4 p-6 rounded-2xl bg-[#0c0d10] border border-white/5">
+        <div class="flex items-center justify-between mb-6">
+          <h3 id="modal-farmer-name" class="text-xl font-semibold"></h3>
+          <button onclick="closeFarmerModal()" class="p-2 rounded-lg hover:bg-white/5 transition-colors">
+            <iconify-icon icon="mdi:close" class="text-xl"></iconify-icon>
+          </button>
+        </div>
+        
+        <div id="modal-farmer-content">
+          <!-- Dynamic content -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== NOTIFICATION TOAST ========== -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden">
+    <div class="px-6 py-4 rounded-xl bg-[#121214] border border-white/10 shadow-lg flex items-center gap-3">
+      <iconify-icon id="toast-icon" class="text-emerald-400 text-xl"></iconify-icon>
+      <span id="toast-message" class="text-sm"></span>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
