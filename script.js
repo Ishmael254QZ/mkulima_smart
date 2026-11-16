@@ -7,7 +7,7 @@ function initializeData() {
       {
         id: 'farmer1',
         name: 'John Kamau',
-        email: 'john@example.com',
+        email: 'johnkiarie@example.com',
         phone: '+254 711224455',
         password: 'password123',
         role: 'farmer'
